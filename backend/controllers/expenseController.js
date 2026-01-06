@@ -8,7 +8,7 @@ async function monthlyTotal(userId, date) {
   const end = new Date(date.getFullYear(), date.getMonth() + 1, 1);
 
   const result = await Expense.aggregate([
-    { $match: { user: mongoose.Types.ObjectId(userId), date: { $gte: start, $lt: end } } },
+    { $match: { user: new mongoose.Types.ObjectId(userId), date: { $gte: start, $lt: end } } },
     { $group: { _id: null, total: { $sum: '$amount' } } }
   ]);
   return (result[0] && result[0].total) || 0;
